@@ -34,7 +34,9 @@
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonStep = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // picDisplay
@@ -82,11 +84,23 @@
             this.buttonStep.UseVisualStyleBackColor = true;
             this.buttonStep.Click += new System.EventHandler(this.buttonStep_Click);
             // 
+            // trackBar1
+            // 
+            this.trackBar1.LargeChange = 2;
+            this.trackBar1.Location = new System.Drawing.Point(281, 448);
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(117, 45);
+            this.trackBar1.TabIndex = 4;
+            this.trackBar1.Value = 1;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 504);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.buttonStep);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonStart);
@@ -94,7 +108,9 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -105,6 +121,7 @@
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.Button buttonStep;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 

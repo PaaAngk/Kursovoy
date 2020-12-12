@@ -23,7 +23,7 @@ namespace kursovaya
         public Particle()
         {
             var direction = (double)rnd.Next(360);
-            int speed = 1 + rnd.Next(10);;
+            int speed = 1 + rnd.Next(10);
 
             speedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
             speedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);

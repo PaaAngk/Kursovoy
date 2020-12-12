@@ -79,6 +79,9 @@ namespace kursovaya
             timer1.Stop();
         }
 
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
 
+        }
     }
 }
