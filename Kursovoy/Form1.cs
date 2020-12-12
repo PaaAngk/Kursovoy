@@ -24,7 +24,7 @@ namespace kursovaya
             {
                 width = picDisplay.Width,
                 gravitationY = 0.25f
-            };
+        };
 
             /*emitter.impactPoints.Add(new GravityPoint
             {
@@ -47,6 +47,7 @@ namespace kursovaya
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            timer1.Interval = trackBar1.Value;
             emitter.UpdateState(100);
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
@@ -81,7 +82,8 @@ namespace kursovaya
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-
+            //timer1.Interval = 100;
         }
+
     }
 }

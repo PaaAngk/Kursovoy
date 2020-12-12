@@ -113,7 +113,7 @@ namespace kursovaya
             particle.x = Particle.rnd.Next(width);// позиция X -- произвольная точка от 0 до Width
             particle.y = 0;// ноль -- это верх экрана
 
-            particle.speedY = 1;// падаем вниз по умолчанию
+            particle.speedY = Speed;// падаем вниз по умолчанию
             particle.speedX = Particle.rnd.Next(-2, 2);// разброс влево и вправа у частиц
         }
     }

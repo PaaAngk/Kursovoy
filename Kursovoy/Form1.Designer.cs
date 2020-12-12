@@ -86,13 +86,16 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.LargeChange = 2;
+            this.trackBar1.LargeChange = 200;
             this.trackBar1.Location = new System.Drawing.Point(281, 448);
-            this.trackBar1.Minimum = 1;
+            this.trackBar1.Maximum = 500;
+            this.trackBar1.Minimum = 40;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(117, 45);
-            this.trackBar1.TabIndex = 4;
-            this.trackBar1.Value = 1;
+            this.trackBar1.Size = new System.Drawing.Size(118, 45);
+            this.trackBar1.SmallChange = 50;
+            this.trackBar1.TabIndex = 400;
+            this.trackBar1.TickFrequency = 80;
+            this.trackBar1.Value = 40;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // Form1
