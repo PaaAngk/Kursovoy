@@ -98,7 +98,6 @@ namespace kursovaya
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            //timer1.Interval = 100;
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)

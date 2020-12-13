@@ -120,12 +120,20 @@ namespace kursovaya
             foreach (var particle in particles)
             {
                 particle.draw(g);
+                drawVector(particle, g);
             }
 
             foreach (var point in impactPoints)
             {
                 point.Render(g);
             }
+        }
+
+        public void drawVector(Particle particle, Graphics g)
+        {
+            var myPen = new System.Drawing.Pen(System.Drawing.Color.Red);
+
+            g.DrawLine(myPen, particle.x  , particle.y, particle.x + particle.speedX, particle.y + particle.radius);
         }
 
         public virtual void ResetParticle(Particle particle)
