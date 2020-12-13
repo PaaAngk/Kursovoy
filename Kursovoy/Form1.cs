@@ -14,7 +14,11 @@ namespace kursovaya
     {
         List<Emitter> emitters = new List<Emitter>();
         Emitter emitter;
+        Particle particle;
 
+        private int count = 0;
+        private Boolean run = true;
+        
         public Form1()
         {
             InitializeComponent();
@@ -24,7 +28,8 @@ namespace kursovaya
             {
                 width = picDisplay.Width,
                 gravitationY = 0.25f
-        };
+            };
+
 
             /*emitter.impactPoints.Add(new GravityPoint
             {
@@ -43,41 +48,52 @@ namespace kursovaya
                 X = (float)(picDisplay.Width * 0.75),
                 Y = picDisplay.Height / 2
             });*/
-        }     
+        }
 
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            timer1.Interval = trackBar1.Value;
-            emitter.UpdateState(100);
+        {        
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                g.Clear(Color.White);
-                emitter.Render(g);
+                if((count >= trackBar1.Value) && (run)) {
+                    emitter.UpdateState(trackBar2.Value);
+                    g.Clear(Color.White);
+                    emitter.Render(g);
+                    count = 0;
+                }
+                
+                particle = emitter.inPart();
+                if (particle != null)
+                {
+                    emitter.infoPart(particle, g);
+                }
             }
+            count++;
             picDisplay.Invalidate();
         }
         
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            emitter.mousePositionX = e.X;
-            emitter.mousePositionY = e.Y;
+            emitter.X = e.X;
+            emitter.Y = e.Y;
+
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            timer1.Start();
+            run = true;
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
+            run = false;
         }
 
         private void buttonStep_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
+            run = true;
+            count = trackBar1.Value;
             timer1_Tick(sender, e);
-            timer1.Stop();
+            run = false;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -85,5 +101,9 @@ namespace kursovaya
             //timer1.Interval = 100;
         }
 
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+
+        }
     }
 }

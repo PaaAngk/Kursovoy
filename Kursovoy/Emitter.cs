@@ -7,8 +7,6 @@ namespace kursovaya
     public class Emitter
     {
         List<Particle> particles = new List<Particle>();
-        public int mousePositionX = 0;
-        public int mousePositionY = 0;
 
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
         public float gravitationX = 0;
@@ -31,7 +29,7 @@ namespace kursovaya
         public Color ColorFrom = Color.White; // начальный цвет частицы
         public Color ColorTo = Color.FromArgb(0, Color.Black); // конечный цвет частиц
 
-        public void UpdateState(int gravitation)
+        public void UpdateState(int speedAcs)
         {
             int particlesToCreate = ParticlesPerTick;
 
@@ -51,8 +49,8 @@ namespace kursovaya
                     particle.y += particle.speedY;
 
                     particle.speedX += gravitationX;
-                    particle.speedY += Speed;
-                }
+                    particle.speedY += (float)speedAcs/10;
+                }      
             }
 
             while (particlesToCreate >= 1)
@@ -62,6 +60,59 @@ namespace kursovaya
                 ResetParticle(particle);
                 particles.Add(particle);
             }
+        }
+
+        public void infoPart(Particle particle, Graphics g)
+        {
+            var stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            var text = $"X = {particle.x}\n" + $"Y = {particle.y}\n" + $"Жизнь = {particle.life}";
+            var font = new Font("Verdana", 10);
+
+            var size = g.MeasureString(text, font);
+
+            g.DrawEllipse(
+               new Pen(Color.Green),
+               particle.x - particle.radius,
+               particle.y - particle.radius,
+               particle.radius * 2,
+               particle.radius * 2
+           );
+
+            g.FillRectangle(
+                new SolidBrush(Color.Green),
+                particle.x,
+                particle.y,
+                size.Width,
+                size.Height
+            );
+
+            g.DrawString(
+                text,
+                font,
+                new SolidBrush(Color.White),
+                particle.x + 45,
+                particle.y + 26,
+                stringFormat
+            );
+        }
+
+        public Particle inPart()
+        {
+            foreach (var particle in particles)
+            {
+                float gX = X - particle.x;
+                float gY = Y - particle.y;
+
+                double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра част
+                if (r + particle.radius < particle.radius * 2) // если частица оказалось внутри окружности
+                {
+                    return particle;
+                }
+            }
+            return null;
         }
 
         public void Render(Graphics g)
@@ -115,6 +166,7 @@ namespace kursovaya
 
             particle.speedY = Speed;// падаем вниз по умолчанию
             particle.speedX = Particle.rnd.Next(-2, 2);// разброс влево и вправа у частиц
+
         }
     }
 }
