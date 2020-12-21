@@ -6,9 +6,8 @@ namespace kursovaya
 {
     public class Emitter
     {
-        List<Particle> particles = new List<Particle>();
+        public List<Particle> particles = new List<Particle>();
 
-        public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
         public float gravitationX = 0;
         public float gravitationY = 0;
 
@@ -21,6 +20,7 @@ namespace kursovaya
         public int Speed = 1; // начальная минимальная скорость движения частицы
         public int RadiusMin = 10; // минимальный радиус частицы
         public int RadiusMax = 30; // максимальный радиус частицы
+        public int scatter = 2;
         public int LifeMin = 20; // минимальное время жизни частицы
         public int LifeMax = 100; // максимальное время жизни частицы
 
@@ -29,10 +29,9 @@ namespace kursovaya
         public Color ColorFrom = Color.White; // начальный цвет частицы
         public Color ColorTo = Color.FromArgb(0, Color.Black); // конечный цвет частиц
 
-        public void UpdateState(int speedAcs)
+        public void UpdateState()
         {
             int particlesToCreate = ParticlesPerTick;
-
             foreach (var particle in particles)
             {
                 particle.life -= 1;
@@ -49,10 +48,10 @@ namespace kursovaya
                     particle.y += particle.speedY;
 
                     particle.speedX += gravitationX;
-                    particle.speedY += (float)speedAcs/10;
+                    particle.speedY += Speed;
                 }      
             }
-
+              
             while (particlesToCreate >= 1)
             {
                 particlesToCreate -= 1;
@@ -62,16 +61,17 @@ namespace kursovaya
             }
         }
 
-        public void infoPart(Particle particle, Graphics g)
+        public void infoPart(Particle particle, Graphics g) // Отображение иформации о частицах
         {
             var stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
 
-            var text = $"X = {particle.x}\n" + $"Y = {particle.y}\n" + $"Жизнь = {particle.life}";
+            var text = $"X = {(int)particle.x}\n" + $"Y = {(int)particle.y}\n" + $"Жизнь = {particle.life}";
             var font = new Font("Verdana", 10);
 
             var size = g.MeasureString(text, font);
+            Color customColor = Color.FromArgb(150, Color.Green);
 
             g.DrawEllipse(
                new Pen(Color.Green),
@@ -82,7 +82,7 @@ namespace kursovaya
            );
 
             g.FillRectangle(
-                new SolidBrush(Color.Green),
+                new SolidBrush(customColor),
                 particle.x,
                 particle.y,
                 size.Width,
@@ -99,7 +99,7 @@ namespace kursovaya
             );
         }
 
-        public Particle inPart()
+        public Particle inPart() // Проверка, нахождения на частице курсора
         {
             foreach (var particle in particles)
             {
@@ -115,24 +115,18 @@ namespace kursovaya
             return null;
         }
 
-        public void Render(Graphics g)
+        public void Render(Graphics g) // Отображение частиц и их векторов
         {
             foreach (var particle in particles)
             {
                 particle.draw(g);
                 drawVector(particle, g);
             }
-
-            foreach (var point in impactPoints)
-            {
-                point.Render(g);
-            }
         }
 
-        public void drawVector(Particle particle, Graphics g)
+        public void drawVector(Particle particle, Graphics g) // Рисую вектора направления частиц
         {
             var myPen = new System.Drawing.Pen(System.Drawing.Color.Red);
-
             g.DrawLine(myPen, particle.x  , particle.y, particle.x + particle.speedX, particle.y + particle.radius);
         }
 
@@ -173,7 +167,7 @@ namespace kursovaya
             particle.y = 0;// ноль -- это верх экрана
 
             particle.speedY = Speed;// падаем вниз по умолчанию
-            particle.speedX = Particle.rnd.Next(-2, 2);// разброс влево и вправа у частиц
+            particle.speedX = Particle.rnd.Next(-scatter, scatter);// разброс влево и вправа у частиц
 
         }
     }
